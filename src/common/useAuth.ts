@@ -10,7 +10,7 @@ interface useAuthStore {
 }
 
 export const useAuthStore = create<useAuthStore>((set) => ({
-  refreshToken: "",
+  refreshToken: null,
   accessToken:null,
   setRefreshToken:(value) => {
     if(value!== null){
