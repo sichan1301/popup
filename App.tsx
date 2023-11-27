@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Text, View } from "react-native";
 import InitializePage from "./src/initialize";
+import { NavigationContainer } from "@react-navigation/native";
+import LoginNavigation from "./src/nav/LoginNavigation";
 
 function App(): JSX.Element {
 
@@ -9,9 +10,9 @@ function App(): JSX.Element {
   if(!isInitialized) return <InitializePage onSuccess={()=>{setIsInitialized(true)}}/>
 
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <NavigationContainer>
+      <LoginNavigation />
+    </NavigationContainer>
   );  
 }
 
