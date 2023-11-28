@@ -3,6 +3,9 @@ import {View,Text,TouchableOpacity,StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
   container:{
+    height:250
+  },
+  buttonLayout:{
     flexDirection:'row'
   }
 })
@@ -15,12 +18,13 @@ interface UsePopupProps {
 
 const UsePopUp = ({desc,linking}:UsePopupProps) => {
   return(
-    <View>
+    <View style={styles.container}>
+
       <View>
         <Text>{desc}</Text>
       </View>
 
-      <View style={styles.container}>
+      <View style={styles.buttonLayout}>
         <View>
           <Text onPress = {linking}> yes</Text>
         </View>
@@ -29,6 +33,7 @@ const UsePopUp = ({desc,linking}:UsePopupProps) => {
           <Text>no</Text>
         </View>
       </View>
+
   </View>
   )
 }

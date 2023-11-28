@@ -8,32 +8,43 @@ interface useAuthStore {
   nickname:string | null,
   nicknameFromRFEF:string | null,
   isGoogleLoginedInRFEF:boolean,
+  isGoogleLoginedInClubpop:boolean,
 
   setRefreshToken: (value:string | null) => void,
   setAccessToken: (value:string) => void,
   setNickname:(value:string) => void,
   setNicknamefromRFEF:(value:string) => void,
-  setIsGoogleLoginedInRFEF:(value:boolean) => void
+  setIsGoogleLoginedInRFEF:(value:boolean) => void,
+  setIsGoogleLoginedInClubpop:(value:boolean) => void
 }
 
 export const useAuthStore = create<useAuthStore>((set) => ({
-  refreshToken: null,
+  refreshToken: 'sef',
   accessToken:null,
-  nickname:null,
+  nickname:'fesf',
   nicknameFromRFEF:null,
   isGoogleLoginedInRFEF:false,
+  isGoogleLoginedInClubpop:false,
+
   setRefreshToken:(value) => {
     if(value!== null){
-      set((state)=>({...state,refreshToken:value})),
-      setAsyncStorageRefreshToken(value)
+      set((state)=>({...state,refreshToken:value}))
+      setAsyncStorageRefreshToken(value)  
     }else{
+      set((state: any) => ({
+        ...state,
+        refreshToken:null,
+        nickname: null,
+        nicknameFromRFEF:null
+      }));
       AsyncStorage.removeItem('refreshToken')
     }
   },
   setAccessToken: (value) => set({ accessToken: value }),  
   setNickname: (value) => set({ nickname: value }),
-  setNicknamefromRFEF: (value) => set({ nickname: value }),
+  setNicknamefromRFEF: (value) => set({ nicknameFromRFEF: value }),
   setIsGoogleLoginedInRFEF: (value) => set({ isGoogleLoginedInRFEF: value }),
+  setIsGoogleLoginedInClubpop: (value) => set({ isGoogleLoginedInClubpop: value }),
 }))
 
 

@@ -2,8 +2,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../page/loginpage';
 import Guide from '../page/guidepage';
 import {NicknamePage} from '../page/nicknamepage';
-import { useState,useEffect,useMemo, useCallback } from 'react';
-import { loadRefreshTokenFromAsyncStorage, useAuthStore } from '../common/useAuth';
+import { useMemo } from 'react';
+import { useAuthStore } from '../common/useAuth';
 import MainPage from '../page/mainpage';
 
 export type LoginNavigationParamList = {
@@ -16,20 +16,9 @@ export type LoginNavigationParamList = {
 const NavigationStack = createNativeStackNavigator<LoginNavigationParamList>();
 
 const LoginNavigation = () => {
-  const {refreshToken} = useAuthStore()
-  // const [token,setToken] = useState<string | null>(null)
 
-  // const setRefreshToken = async() => {
-  //   const res = await loadRefreshTokenFromAsyncStorage()
-  //   setToken(res)
-  // }
-
-  useEffect(()=>{
-    // setRefreshToken()
-    console.log(refreshToken)
-  },[])
-  
-  const initialRouteName = useMemo(()=>refreshToken ? 'MainPage':'GuidePage',[refreshToken])
+  const {refreshToken,nickname} = useAuthStore()
+  const initialRouteName = useMemo(()=> (refreshToken&&nickname) ? 'MainPage': 'GuidePage',[refreshToken])
 
   return (
     <NavigationStack.Navigator initialRouteName={initialRouteName}>

@@ -7,9 +7,14 @@ import { useAuthStore } from '../common/useAuth';
 const GuidePage = () => {
   const navigation = useNavigation<NavigationProp<LoginNavigationParamList>>();
   const {refreshToken,nickname,nicknameFromRFEF} = useAuthStore()
+  
+  
   useEffect(()=>{
-    console.log(`refreshToken ${refreshToken}`)
-  },[])
+    console.log(`guidepage refreshToken ${refreshToken}`)
+    console.log(`guidepage nickname ${nickname}`)
+    console.log(`guidepage nicknameFromRFEF ${nicknameFromRFEF}`)
+  },[refreshToken,nickname])
+
   return (
     <View>
       <Text>GuidePage</Text>    
