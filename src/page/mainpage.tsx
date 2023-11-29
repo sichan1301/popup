@@ -40,12 +40,13 @@ const MainPage = () => {
         </View>
       }
 
-      {(nicknameFromRFEF && (nicknameFromRFEF!==nickname)) && <UsePopUp desc={(isGoogleLoginedInRFEF && !isGoogleLoginedInClubpop)? '현재 게스트로그인중입니다. 구글 계정과 연동하시겠습니까??':"현재 로그인 중인 계정과 RFEF의 계정이 다릅니다. 연동하시겠습니까"} linking = {linkingWithRFEF}/>} 
-      
-      
-      <View>
-        <Button title="로그아웃" onPress={logout} />
-      </View>
+      {
+        (nicknameFromRFEF && (nicknameFromRFEF!==nickname)) ? 
+        <UsePopUp desc={(isGoogleLoginedInRFEF && !isGoogleLoginedInClubpop)? '현재 게스트로그인중입니다. 구글 계정과 연동하시겠습니까??':"현재 로그인 중인 계정과 RFEF의 계정이 다릅니다. 연동하시겠습니까"} linking = {linkingWithRFEF}/>:
+        <View>
+          <Button title="로그아웃" onPress={logout} />
+        </View>
+      }   
     </>
   );
 };

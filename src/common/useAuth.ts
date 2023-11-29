@@ -7,7 +7,7 @@ interface useAuthStore {
   accessToken:string | null,
   nickname:string | null,
   nicknameFromRFEF:string | null,
-  isGoogleLoginedInRFEF:boolean,
+  isGoogleLoginedInRFEF:boolean,  
   isGoogleLoginedInClubpop:boolean,
 
   setRefreshToken: (value:string | null) => void,
@@ -19,9 +19,9 @@ interface useAuthStore {
 }
 
 export const useAuthStore = create<useAuthStore>((set) => ({
-  refreshToken: 'sef',
+  refreshToken: null,
   accessToken:null,
-  nickname:'fesf',
+  nickname: null,
   nicknameFromRFEF:null,
   isGoogleLoginedInRFEF:false,
   isGoogleLoginedInClubpop:false,

@@ -16,9 +16,8 @@ export type LoginNavigationParamList = {
 const NavigationStack = createNativeStackNavigator<LoginNavigationParamList>();
 
 const LoginNavigation = () => {
-
-  const {refreshToken,nickname} = useAuthStore()
-  const initialRouteName = useMemo(()=> (refreshToken&&nickname) ? 'MainPage': 'GuidePage',[refreshToken])
+  const {nickname} = useAuthStore()
+  const initialRouteName = useMemo(()=> nickname ? 'MainPage': 'GuidePage',[nickname])
 
   return (
     <NavigationStack.Navigator initialRouteName={initialRouteName}>

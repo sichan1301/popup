@@ -2,11 +2,9 @@ import { View, Text, Linking} from "react-native"
 import {useCallback, useEffect} from 'react'
 import { useAuthStore,loadRefreshTokenFromAsyncStorage } from "./common/useAuth";
 
-
 interface InitializePageProps {
   onSuccess:()=>void;
 }
-
 
 /**
  * @function randomLogin
@@ -21,26 +19,24 @@ const randomLogin = () => {
   }
 }
 
-
 /**
  * 테스트 방법 
  * 1. RFEF에서 넘어오지 않을 경우, checkIsFromRFEF에서 const initURL = null 로 실행
- *  1-1 RFEF에서 넘어오지 않았고, clubpop에 로그아웃 돼있던 경우 = useAuthStore의 refreshToken, nickname값을 null값으로 설정 후 실행
+ *  1-1 RFEF에서 넘어오지 않았고, clubpop에 로그아웃 돼있던 경우 = useAuthStore의 refreshToken, nickname값을 null로 설정 후 실행
  *  1-2 RFEF에서 넘어오지 않았고, clubpop에 로그인 돼있던 경우 = useAuthStore의 refreshToken, nickname값을 null이 아닌 아무 string값으로 설정 후 실행
  
  * 2. RFEF에서 넘어온 경우, checkIsFromRFEF에서 const initURL = http://~?token=~로 실행 
- *  2-1 RFEF에서 넘어왔고, clubpop에 로그아웃 돼있던 경우 = useAuthStore의 refreshToken, nickname값을 null값으로 설정 후 실행 
+ *  2-1 RFEF에서 넘어왔고, clubpop에 로그아웃 돼있던 경우 = useAuthStore의 refreshToken, nickname값을 null로 설정 후 실행 
  *  2-2 RFEF에서 넘어왔고, clubpop에 로그인 돼있던 경우 = useAuthStore의 refreshToken, nickname값을 null이 아닌 아무 string값으로 설정 후 실행 
  * 
  * RFEF에서 넘어올 때, clubpop이 로그인 되어있던 경우는 구글로그인, 게스트로그인 중 랜덤으로 설정해놨음 
  */ 
 
-
 const InitializePage = ({onSuccess}:InitializePageProps) => {
   const {refreshToken,accessToken,setAccessToken,setRefreshToken,setNickname,setIsGoogleLoginedInRFEF,setNicknamefromRFEF,setIsGoogleLoginedInClubpop} = useAuthStore()
 
   /**
-   * 실제로 유효한 token값이 실제로 없으니 임시로 Token을 반환해주는 함수. parameter로 들어온 refreshToken은 헤더의 토큰으로 사용했다고 가정 
+   * 실제로 유효한 token값이 없으니 임시로 Token을 반환해주는 함수. parameter로 들어온 refreshToken은 헤더의 토큰으로 사용했다고 가정 
    */
   const getAxiosTokenByRefreshToken = (refreshtoken:string) => {
     return {
@@ -49,7 +45,7 @@ const InitializePage = ({onSuccess}:InitializePageProps) => {
     }
   }
   /**
-   * 실제로 유효한 token값이 실제로 없으니 임시로 유저 정보를 반환해주는 함수 
+   * 실제로 유효한 token값이 없으니 임시로 유저 정보를 반환해주는 함수 
    */
   const getAxiosMyInfo = (isFromRFEF:boolean) => {
     if(isFromRFEF === true){
@@ -71,8 +67,8 @@ const InitializePage = ({onSuccess}:InitializePageProps) => {
 
   const checkIsFromRFEF = async()=> { 
     // const initURL = await Linking.getInitialURL()                              // 원래는 이걸로 확인해야함.
-    const initURL = 'http://nft.campvr.kr?token=eyJhbGciOiJI'               // RFEF에서 넘어왔을 경우 (하드코딩)
-    // const initURL = null                                                    // RFEF에서 넘어오지 않았을 경우
+    // const initURL = 'http://nft.campvr.kr?token=eyJhbGciOiJI'               // RFEF에서 넘어왔을 경우 (하드코딩)
+    const initURL = null                                                        // RFEF에서 넘어오지 않았을 경우
     initURL?initWithRFEFAccessToken(initURL):initWithClubpopRefreshToken()
   };
 
@@ -120,12 +116,10 @@ const InitializePage = ({onSuccess}:InitializePageProps) => {
       getMyInfo(false);  
     }
   }
-
   
   /**
    * @function initWithRFEFAccessToken
    * RFEF로부터 넘어왔을 경우 URL의 token값으로 accessToken,refreshToken받아온 후 nickname받아와서 전역에 저장
-   * 
    */
 
   const initWithRFEFAccessToken = async (url:string) => {
@@ -148,14 +142,13 @@ const InitializePage = ({onSuccess}:InitializePageProps) => {
         // headers:{
         //   Authorization: authAccessToken
         // }})
-        const data = getAxiosTokenByRefreshToken(authAccessToken)
-        const {accessToken,refreshToken} = data
-        setAccessToken(accessToken)
+        const data = getAxiosTokenByRefreshToken(authAccessToken)  // 위의 axios 대신 임시로 사용 
+        const {accessToken,refreshToken} = data                          
+        setAccessToken(accessToken)                         
         setRefreshToken(refreshToken)
         getMyInfo(true)
      }catch{}
   }
-
 
   return(
     <View>
@@ -165,6 +158,5 @@ const InitializePage = ({onSuccess}:InitializePageProps) => {
     </View>
   )
 }
-
 
 export default InitializePage
